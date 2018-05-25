@@ -1,0 +1,25 @@
+type project
+title
+    fun-girlz
+owners
+    Marian Dziubiak
+authors 
+    Marian Dziubiak
+projectUrl
+    https://github.com/[github-user]/fun-girlz
+iconUrl
+    https://raw.githubusercontent.com/[github-user]/fun-girlz/master/docs/files/img/logo.png
+licenseUrl
+    https://github.com/[github-user]/fun-girlz/blob/master/LICENSE.txt
+requireLicenseAcceptance
+    false
+copyright
+    Copyright 2017
+tags
+    fsharp
+summary
+    Summary not set
+description
+    Description not set
+
+

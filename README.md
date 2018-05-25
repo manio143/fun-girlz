@@ -1,0 +1,1 @@
+# Warsztat z programowania funkcyjnego
