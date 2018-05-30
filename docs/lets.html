@@ -40,14 +40,57 @@
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
+<span class="l">5: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">a</span> <span class="o">=</span> <span class="n">1</span>
 <span class="k">let</span> <span class="i">b</span> <span class="o">=</span> <span class="n">2.0</span>
 <span class="k">let</span> <span class="i">c</span> <span class="o">=</span> <span class="s">&#39;c&#39;</span>
 <span class="k">let</span> <span class="i">d</span> <span class="o">=</span> <span class="s">&quot;Ala ma kota&quot;</span>
+<span class="k">let</span> <span class="i">e</span> <span class="o">=</span> ()
 </code></pre></td>
 </tr>
 </table>
+<p>Powyższe stałe mają następujące typy</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">val</span> <span class="i">a</span> <span class="o">:</span> <span class="i">int</span> <span class="o">=</span> <span class="n">1</span>
+<span class="k">val</span> <span class="i">b</span> <span class="o">:</span> <span class="i">float</span> <span class="o">=</span> <span class="n">2.0</span>
+<span class="k">val</span> <span class="i">c</span> <span class="o">:</span> <span class="i">char</span> <span class="o">=</span> <span class="s">&#39;c&#39;</span>
+<span class="k">val</span> <span class="i">d</span> <span class="o">:</span> <span class="i">string</span> <span class="o">=</span> <span class="s">&quot;Ala ma kota&quot;</span>
+<span class="k">val</span> <span class="i">e</span> <span class="o">:</span> <span class="i">unit</span> <span class="o">=</span> ()
+</code></pre></td>
+</tr>
+</table>
+<p>W F# <code>int</code> to <code>System.Int32</code>, <code>float</code> to <code>System.Double</code>, <code>char</code> to <code>System.Char</code>, <code>string</code> to <code>System.String</code>, a <code>unit</code> to specjalny typ, który ma jedną wartość <code>()</code> i używany jest jako odpowiednik <code>void</code> z programów imperatywnych. W programowaniu funkcyjnym, każda funkcja musi zwracać jakąś wartość. Więc kiedy nie ma zbytnio co zwrócić to zwracamy właśnie <code>unit</code>.</p>
+<h2><a name="F-Interactive" class="anchor" href="#F-Interactive">F# Interactive</a></h2>
+<p>Żeby pobawić się F# będziemy korzystać z narzędzia FSI, które dynamicznie kompiluje kod, który mu podajemy i dokonuje ewaluacji wyrażeń.</p>
+<p>Poniżej będę pisał <code>fsi</code> odwołując się do tego środowiska, natomiast pod Linuxem binarka nazywa się <code>fsharpi</code>.</p>
+<p>Możemy uruchomić FSI w pustym środowisku</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fsi</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Możemy załadować nasz skrypt</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fsi</span> <span class="o">/</span><span class="i">path</span><span class="o">/</span><span class="k">to</span><span class="o">/</span><span class="i">script</span><span class="o">.</span><span class="i">fsx</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Ale możemy załadować skrypt również w trakcie pracy przez dyrektywę <code>#l</code></p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&gt;</span> #<span class="i">load</span> <span class="s">&quot;/path/to/script.fsx&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<h2><a name="Funkcje" class="anchor" href="#Funkcje">Funkcje</a></h2>
 <p>Stałe mogą określać dowolną wartość, więc również <strong>funkcje</strong>.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -62,7 +105,7 @@
 </code></pre></td>
 </tr>
 </table>
-<p>Ta postać to tzw. wyrażenie lambda. W matematyce używa się symbolu λ. <code>niech id = λx. x</code>. Nie będziemy zagłębiali się tutaj zbytnio w rachunek lambda, ale warto zwrócić uwagę na kilka rzeczy:</p>
+<p>Ta postać to tzw. wyrażenie lambda lub funkcja anonimowa. W matematyce używa się symbolu λ. <code>niech id = λx. x</code>. Nie będziemy zagłębiali się tutaj zbytnio w rachunek lambda, ale warto zwrócić uwagę na kilka rzeczy:</p>
 <p>Każda lambda ma jeden argument. Funkcje wieloargumentowe to w zasadzie funkcje jednoargumentowe, które zwracają kolejną jednoargumentową funkcję.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -88,31 +131,63 @@
 </code></pre></td>
 </tr>
 </table>
-<h2><a name="F-Interactive" class="anchor" href="#F-Interactive">F# Interactive</a></h2>
-<p>Żeby pobawić się F# będziemy korzystać z narzędzia FSI, które dynamicznie kompiluje kod, który mu podajemy i dokonuje ewaluacji wyrażeń.</p>
-<p>Poniżej będę pisał <code>fsi</code> odwołując się do tego środowiska, natomiast pod Linuxem binarka nazywa się <code>fsharpi</code>.</p>
-<p>Możemy uruchomić FSI w pustym środowisku</p>
+<p>Lepiej zobrazujemy to przy zapisie lambda.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fsi</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">dodaj&#39;</span> <span class="o">=</span> <span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="k">fun</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">x</span> <span class="o">+</span> <span class="i">y</span>
+<span class="k">let</span> <span class="i">dodaj5&#39;</span> <span class="o">=</span> <span class="i">dodaj&#39;</span> <span class="n">5</span>
+<span class="k">let</span> <span class="i">dodaj5&#39;&#39;</span> <span class="o">=</span> <span class="k">fun</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="n">5</span> <span class="o">+</span> <span class="i">y</span>
 </code></pre></td>
 </tr>
 </table>
-<p>Możemy załadować nasz skrypt</p>
+<h2><a name="Wyrażenia-warunkowe" class="anchor" href="#Wyrażenia-warunkowe">Wyrażenia warunkowe</a></h2>
+<p>W programowaniu funkcyjnym można bardzo łatwo określić gdzie wyrażenie się zaczyna, a gdzie kończy. W przypadku wyrażenia <code>if</code> jego struktura to <code>if bool-exp then 'a-exp else 'a-exp</code>, gdzie <code>'a</code> jest pewnym typem. To oznacza, że każdy If ma Else oraz, że obie gałęzie muszą zwracać wartość tego samego typu.</p>
+<p>Kolejna rzecz, przez którą trzeba się przebić to to, że ciało funkcji to jedno wyrażenie. W przypadku imperatywnego F# nie będzie to prawdą, ale pisząc czysto funkcyjny kod jak najbardziej.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fsi</span> <span class="o">/</span><span class="i">path</span><span class="o">/</span><span class="k">to</span><span class="o">/</span><span class="i">script</span><span class="o">.</span><span class="i">fsx</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">even</span> <span class="i">x</span> <span class="o">=</span> <span class="k">if</span> <span class="i">x</span> <span class="o">%</span> <span class="n">2</span> <span class="o">=</span> <span class="n">0</span> <span class="k">then</span> <span class="k">true</span> <span class="k">else</span> <span class="k">false</span>
 </code></pre></td>
 </tr>
 </table>
-<p>Ale możemy załadować skrypt również w trakcie pracy przez dyrektywę <code>#l</code></p>
+<p>W F# do porównania używa się znaku <code>=</code>, ale jeśli jesteś bardzo przyzwyczajona do <code>==</code> to można sobie taki operator samemu zdefiniować.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&gt;</span> #<span class="i">load</span> <span class="s">&quot;/path/to/script.fsx&quot;</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">==</span>) <span class="o">=</span> (<span class="o">=</span>)
+
+<span class="k">let</span> <span class="i">discrete</span> <span class="i">x</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="i">x</span> <span class="o">==</span> <span class="n">0</span> <span class="k">then</span> <span class="n">0</span> 
+    <span class="k">else</span> <span class="k">if</span> <span class="i">x</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">then</span> <span class="n">1</span>
+         <span class="k">else</span> <span class="o">-</span><span class="n">1</span>
 </code></pre></td>
 </tr>
 </table>
-<p><em>exercises</em></p>
+<p>Powyżej można wstawić nawiasy wokół drugiego warunku, żeby precyzyjniej pokazać strukturę wyrażeń.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">discrete&#39;</span> <span class="i">x</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="i">x</span> <span class="o">==</span> <span class="n">0</span> <span class="k">then</span> <span class="n">0</span> 
+    <span class="k">else</span> (<span class="k">if</span> <span class="i">x</span> <span class="o">&gt;</span> <span class="n">0</span> <span class="k">then</span> <span class="n">1</span>
+          <span class="k">else</span> <span class="o">-</span><span class="n">1</span>)
+</code></pre></td>
+</tr>
+</table>
+<p>Przy okazji poruszymy kwestię białych znaków i wcięć. W F# jeśli przerzucamy część wyrażenia do nowej linii to musi ono być wcięte tak żeby zaczynać się nie wcześniej niż początek tego wyrażenia. Wcięcia robimy spacjami, nie znakiem <code>\t</code>.</p>
+<h1><a name="Zadania" class="anchor" href="#Zadania">Zadania</a></h1>
+<ol>
+<li>Napisz funkcję <code>succ</code>, która dla znaku od 'a' do 'y' poda znak następny, a dla 'z' poda 'a'.</li>
+<li>Użyj wyrażenia warunkowego do deklaracji stałej liczbowej.</li>
+</ol>
+<p>Pytania? Jeśli wszystko jasne, to przechodzimy do <a href="./sets.html">następnego modułu</a></p>
 
 
         </div>

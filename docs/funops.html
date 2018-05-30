@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Operacja na funkcjach
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Project has no summmary; update build.fsx"/>
+    <meta name="author" content="Marian Dziubiak"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/fun-girlz/content/style.css" />
+    <script type="text/javascript" src="/fun-girlz/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/Update GitHome in build.fsx/fun-girlz">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/fun-girlz/index.html">fun-girlz</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1><a name="Operacja-na-funkcjach" class="anchor" href="#Operacja-na-funkcjach">Operacja na funkcjach</a></h1>
+<p>Skoro funkcje są wartościami, to nic nie stoi nam na przeszkodzie żeby używać ich z operatorami. Podstawową operacją na funkcjach jest ich złożenie:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">&lt;&lt;</span>) <span class="i">f</span> <span class="i">g</span> <span class="o">=</span> <span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="i">f</span> (<span class="i">g</span> <span class="i">x</span>)
+
+<span class="k">let</span> <span class="i">add2mul5</span> <span class="o">=</span> <span class="o">(*)</span> <span class="n">5</span> <span class="o">&lt;&lt;</span> (<span class="o">+</span>) <span class="n">2</span>
+<span class="k">let</span> <span class="i">add2mul5&#39;</span> <span class="i">x</span> <span class="o">=</span> (<span class="i">x</span> <span class="o">+</span> <span class="n">2</span>) <span class="o">*</span> <span class="n">5</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Wiadomo, które jest bardziej czytelne, ale w przypadku niektórych złożonych wyrażeń, pozbywamy się sporej ilości nawiasów stosując operator złożenia.</p>
+<p>Kolejnym operatorem jest to z czego znany jest F#, czyli <code>|&gt;</code> (pipe), który służy do pompowania wyników jednej funkcji do drugiej.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">|&gt;</span>) <span class="i">x</span> <span class="i">g</span> <span class="o">=</span> <span class="i">g</span> <span class="i">x</span>
+
+<span class="k">let</span> <span class="i">add2mul5&#39;&#39;</span> <span class="i">x</span> <span class="o">=</span> <span class="i">x</span> <span class="o">+</span> <span class="n">2</span> <span class="o">|&gt;</span> <span class="o">(*)</span> <span class="n">5</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Widzicie różnicę? Pipe bierze wartość, a nie funkcję, więc będzie miał nieco inne zastosowania. Zazwyczaj składamy funkcje zanim mamy wartość do przesłania przez nie, a używamy pipe'a kiedy tą wartość od razu mamy.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">(<span class="i">f</span> <span class="o">&lt;&lt;</span> <span class="i">g</span>) <span class="i">x</span>  <span class="o">&lt;=&gt;</span>  <span class="i">f</span> <span class="o">&lt;|</span> <span class="i">g</span> <span class="i">x</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Przełożenie funkcji krotki na funkcje argumentowe, jest rzadszym ale również spotykanym przypadkiem operacji na funkcjach. Polega ono na rozwijaniu parametrów z krotki.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">uncurry</span> <span class="i">f</span> <span class="o">=</span> <span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="k">fun</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">f</span> (<span class="i">x</span>,<span class="i">y</span>)
+<span class="k">let</span> <span class="i">curry</span> <span class="i">f</span> <span class="o">=</span> <span class="k">fun</span> (<span class="i">x</span>,<span class="i">y</span>) <span class="k">-&gt;</span> <span class="i">f</span> <span class="i">x</span> <span class="i">y</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Nie mam dobrego pomysłu na zadanie, które nie będzie trywialne, więc przejdźmy do <a href="./algeb.html">następnego modułu</a></p>
+
+
+        </div>
+        <div class="span3">
+          <img src="/fun-girlz/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">fun-girlz</li>
+            <li><a href="/fun-girlz/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/fun-girlz">Get Library via NuGet</a></li>
+            <li><a href="https://github.com/Update GitHome in build.fsx/fun-girlz">Source Code on GitHub</a></li>
+            <li><a href="/fun-girlz/license.html">License</a></li>
+            <li><a href="/fun-girlz/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/fun-girlz/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/fun-girlz/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/Update GitHome in build.fsx/fun-girlz"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>

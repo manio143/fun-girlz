@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Pokaż mi swój ogon
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Project has no summmary; update build.fsx"/>
+    <meta name="author" content="Marian Dziubiak"/>
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet"/>
+
+    <link type="text/css" rel="stylesheet" href="/fun-girlz/content/style.css" />
+    <script type="text/javascript" src="/fun-girlz/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/Update GitHome in build.fsx/fun-girlz">github page</a></li>
+        </ul>
+        <h3 class="muted"><a href="/fun-girlz/index.html">fun-girlz</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1><a name="Pokaż-mi-swój-ogon" class="anchor" href="#Pokaż-mi-swój-ogon">Pokaż mi swój ogon</a></h1>
+<p>Rekurencja to wielokrotne wołanie funkcji. Za każdym razem kiedy wołamy jakąś funkcję to odkładamy na stos operacyjny informację, gdzie powinniśmy wrócić po wykonaniu funkcji. Stos ma pewną wielkość i jeśli odłożymy na niego za dużo danych to znajdziemy się w bardzo złej sytuacji. Na platformie .NET dostaniemy wyjątek <code>StackOverflowException</code>, którego nie da się obsłużyć i wykonywanie naszego programu zostanie przerwane. Przykładem może być taka oto nieskończona pętla:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="k">rec</span> <span class="i">infinite</span> <span class="i">i</span> <span class="o">=</span> <span class="n">1</span> <span class="o">+</span> <span class="i">infinite</span> (<span class="i">i</span> <span class="o">+</span> <span class="n">1</span>)
+</code></pre></td>
+</tr>
+</table>
+<p>Jednak nie musi to być coś nieskończonego, wystarczy po prostu że ilość danych będzie dostatecznie duża. Co można zrobić?</p>
+<p>Otóż nasz kompilator potrafi optymalizować wywołania rekurencyjne i produkować pętlę bez użycia stosu w kodzie wynikowym, ale tylko jeśli funkcja jest rekurencyjna ogonowo.</p>
+<p>Ten ogon bierze się stąd, że ostatnim wyrażeniem nierozgałęziającym jest wywołanie tej samej funkcji, ale z odpowiednio innymi parametrami.</p>
+<p>Większość rekurencji ogonowej opiera się o wzorzec akumulatora. Powyższą nieskończoną pętlę zapiszemy w poniższy sposób i o ile będzie się ona pętlić w nieskończoność, to nie poskutkuje śmiercią procesu.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">infinite&#39;</span> <span class="i">i</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="i">inf_</span> <span class="i">i</span> <span class="i">acc</span> <span class="o">:</span> <span class="i">int</span> <span class="o">=</span> <span class="i">inf_</span> (<span class="i">i</span><span class="o">+</span><span class="n">1</span>) (<span class="i">acc</span><span class="o">+</span><span class="n">1</span>)
+    <span class="i">inf_</span> <span class="i">i</span> <span class="n">0</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Będziemy ten wzorzec wykorzystywać do optymalizacji naszego kodu. Zaczniemy od porównania liczenia n-tej liczby Fibonacciego.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="k">rec</span> <span class="i">fib</span> <span class="i">n</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="i">n</span> <span class="o">&lt;=</span> <span class="n">1</span> <span class="k">then</span> <span class="n">1</span>
+    <span class="k">else</span> <span class="i">fib</span> (<span class="i">n</span><span class="o">-</span><span class="n">1</span>) <span class="o">+</span> <span class="i">fib</span> (<span class="i">n</span><span class="o">-</span><span class="n">2</span>)
+
+<span class="k">let</span> <span class="i">fibt</span> <span class="i">n</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="i">fib_</span> <span class="i">n</span> <span class="i">a</span> <span class="i">b</span> <span class="o">=</span>
+        <span class="k">if</span> <span class="i">n</span> <span class="o">=</span> <span class="n">0</span> <span class="k">then</span> <span class="i">a</span>
+        <span class="k">else</span> <span class="i">fib_</span> (<span class="i">n</span><span class="o">-</span><span class="n">1</span>) (<span class="i">a</span> <span class="o">+</span> <span class="i">b</span>) <span class="i">a</span>
+    <span class="i">fib_</span> <span class="i">n</span> <span class="n">1</span> <span class="n">0</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Żeby przetestować optymalizację włączymy licznik czasu w FSI</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#time</span> <span class="s">&quot;on&quot;</span>;;
+</code></pre></td>
+</tr>
+</table>
+<p>A następnie obliczymy wartość</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fib</span> <span class="n">40</span>;;
+<span class="i">fibt</span> <span class="n">40</span>;;
+</code></pre></td>
+</tr>
+</table>
+<p>I porównamy czasy ich wykonania.</p>
+<h2><a name="Funkcje-wyższych-rzędów" class="anchor" href="#Funkcje-wyższych-rzędów">Funkcje wyższych rzędów</a></h2>
+<p>Użyjemy zdobytej przez nas dotychczas wiedzy, aby napisać funkcje, które ułatwiają życie podczas pracy z listami.</p>
+<h4><a name="header" class="anchor" href="#header"><code>map</code></a></h4>
+<p>Przypomnijmy sobie funkcje <code>plus1</code> i <code>succL</code>. Miały one wspólną funkcjonalność. Brały listę, robiły coś dla każdego jej elementu, niezależnie od pozostałych elementów, i zwracały zmodyfikowaną listę. Jest funkcjonalność bibliotecznej funkcji <code>map</code>, którą właśnie zaimplementujemy.</p>
+<p><code>map</code> ma sygnaturę <code>('a -&gt; 'b) -&gt; 'a list -&gt; 'b list</code></p>
+<p>Powiemy, że <code>map</code> jest funkcją "wyższego rzędu" ponieważ jednym z jej parametrów jest funkcja.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="k">rec</span> <span class="i">map</span> <span class="i">f</span> <span class="i">l</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="i">l</span> <span class="k">with</span>
+    | <span class="i">h</span> <span class="o">::</span> <span class="i">t</span> <span class="k">-&gt;</span> <span class="i">f</span> <span class="i">h</span> <span class="o">::</span> <span class="i">map</span> <span class="i">f</span> <span class="i">t</span>
+    | []     <span class="k">-&gt;</span> []
+</code></pre></td>
+</tr>
+</table>
+<p>Teraz waszym zadaniem będzie ogonowa implementacja naszej funkcji map. Wzorcowe rozwiązanie poniżej.</p>
+<div>
+    <center><button id="map-sp-btn" onclick="document.getElementById('map-sp').style.display = ''; document.getElementById('map-sp-btn').style.display = 'none'">Spoiler (map)</button><center>
+    <div id="map-sp" style="display: none;">
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">mapt</span> <span class="i">f</span> <span class="i">l</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="i">reverse</span> <span class="i">l</span> <span class="i">r</span> <span class="o">=</span>
+        <span class="k">match</span> <span class="i">l</span> <span class="k">with</span>
+        | <span class="i">h</span> <span class="o">::</span> <span class="i">t</span> <span class="k">-&gt;</span> <span class="i">reverse</span> <span class="i">t</span> (<span class="i">h</span> <span class="o">::</span> <span class="i">r</span>)
+        | [] <span class="k">-&gt;</span> <span class="i">r</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="i">map_</span> <span class="i">l</span> <span class="i">acc</span> <span class="o">=</span>
+        <span class="k">match</span> <span class="i">l</span> <span class="k">with</span>
+        | <span class="i">h</span> <span class="o">::</span> <span class="i">t</span> <span class="k">-&gt;</span> <span class="i">map_</span> <span class="i">t</span> (<span class="i">f</span> <span class="i">h</span> <span class="o">::</span> <span class="i">acc</span>)
+        | []     <span class="k">-&gt;</span> <span class="i">reverse</span> <span class="i">acc</span> []
+    <span class="i">map_</span> <span class="i">l</span> []
+</code></pre></td>
+</tr>
+</table>
+</div>
+</div>
+<p>Tak jak wcześniej, możemy przetestować działanie naszej implementacji <code>map</code> i <code>mapt</code> na funkcji <code>fib</code> i <code>fibt</code> oraz liście <code>[1..40]</code>.</p>
+<p>Często będziemy stosować <code>map</code> z funkcjami anonimowymi:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">plus1</span> <span class="o">=</span> <span class="i">List</span><span class="o">.</span><span class="i">map</span> (<span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="n">1</span> <span class="o">+</span> <span class="i">x</span>)
+</code></pre></td>
+</tr>
+</table>
+<p>Powyżej wykorzystujemy częściową aplikację, żeby nie musieć podawać ostatniego parametru do funkcji <code>map</code> (tym razem bibliotecznej) oraz anonimową funkcję dodającą jeden.</p>
+<h4><a name="header-1" class="anchor" href="#header-1"><code>fold</code></a></h4>
+<p>Kolejną przydatną funkcją jest <code>fold</code> który służy do zwijania listy (robienie z niej kuli do bałwanka) łącząc kolejne elementy pewną funkcją.</p>
+<p>Przy jej pomocy zaimplementujemy w prosty sposób funkcję sumującą elementy listy.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="k">rec</span> <span class="i">fold</span> <span class="i">f</span> <span class="i">v</span> <span class="i">l</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="i">l</span> <span class="k">with</span>
+    | [] <span class="k">-&gt;</span> <span class="i">v</span>
+    | <span class="i">h</span> <span class="o">::</span> <span class="i">t</span> <span class="k">-&gt;</span> <span class="i">fold</span> <span class="i">f</span> (<span class="i">f</span> <span class="i">v</span> <span class="i">h</span>) <span class="i">t</span>
+
+<span class="k">let</span> <span class="i">sum</span> <span class="o">=</span> <span class="i">fold</span> (<span class="o">+</span>) <span class="n">0</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Jest to tzw. lewostronny <code>fold</code>, czyli zaczynając od lewej strony bierzemy wartość początkową <code>v</code> i rolujemy ją po liście aplikując funkcję <code>f</code>. Jak widać <code>fold</code> jest domyślnie ogonowy.</p>
+<p>Możemy przy jego pomocy zaimplementować także nasz <code>map</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">mapf</span> <span class="i">f</span> <span class="i">l</span> <span class="o">=</span> <span class="i">List</span><span class="o">.</span><span class="i">rev</span> (<span class="i">fold</span> (<span class="k">fun</span> <span class="i">acc</span> <span class="i">e</span> <span class="k">-&gt;</span> <span class="i">f</span> <span class="i">e</span> <span class="o">::</span> <span class="i">acc</span>) [] <span class="i">l</span>)
+</code></pre></td>
+</tr>
+</table>
+<h1><a name="Zadania" class="anchor" href="#Zadania">Zadania</a></h1>
+<ol>
+<li>Zaimplementuj funkcję <code>filter</code> o sygnaturze <code>('a -&gt; bool) -&gt; 'a list -&gt; 'a list</code></li>
+<li>Używając powyższej oraz ogonowej implementacji funkcji <code>len</code> napisz prostą funkcję <code>count</code> (można zaimplementować <code>len</code> przez <code>fold</code>)</li>
+<li>Napisz prawostronny <code>foldr</code>, który pozwoli napisać <code>mapfr</code> bez potrzeby <code>List.rev</code></li>
+<li>Napisz ogoną implementację silni oraz wersję korzystającą tylko z funkcji wyższego rzędu</li>
+</ol>
+<p>Pytania? Jeśli wszystko jasne, to przechodzimy do <a href="./funops.html">następnego modułu</a></p>
+
+
+        </div>
+        <div class="span3">
+          <img src="/fun-girlz/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
+            <li class="nav-header">fun-girlz</li>
+            <li><a href="/fun-girlz/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="http://nuget.org/packages/fun-girlz">Get Library via NuGet</a></li>
+            <li><a href="https://github.com/Update GitHome in build.fsx/fun-girlz">Source Code on GitHub</a></li>
+            <li><a href="/fun-girlz/license.html">License</a></li>
+            <li><a href="/fun-girlz/release-notes.html">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="/fun-girlz/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="/fun-girlz/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/Update GitHome in build.fsx/fun-girlz"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
+  </body>
+  </html>
