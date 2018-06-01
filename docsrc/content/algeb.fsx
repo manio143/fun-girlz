@@ -7,7 +7,7 @@
 Dyskryminowane unie
 ======================
 
-Unie, czy też typy algebraiczne to takie byty których wartości są definiowane przy użyciu pewnego kontruktora. Mogą służyć jako alternatywy bezargumentowe lub alternatywy argumentowane.
+Unie, czy też typy algebraiczne to takie byty których wartości są definiowane przy użyciu pewnego konstruktora. Mogą służyć jako alternatywy bezargumentowe lub alternatywy argumentowane.
 
 Chyba najprościej pokazać na przykładzie.
 
@@ -60,10 +60,10 @@ Drzewo BST (Binary Search Tree) to takie drzewo binarne, gdzie wszystkie wierzch
 
 Drzewa BST służą do wyszukiwania elementów w zbiorze w czasie O(log n), gdzie n jest liczbą wierzchołków w drzewie. Przy czym, żeby to faktycznie zachodziło to drzewo BST musi być zbalansowane.
 
-Ale zaczniemy od skupienia się na prostych operacjach.
+Ale my skupimy się na prostych operacjach.
 
 Zadania
-============
+----------
 
 1. Napisz funkcję `insertBST x t`, która bierze element, drzewo i zwraca nowe drzewo zawierające ten element zachowując zasady BST
 2. Napisz funkcję `fromListBST l`, która bierze listę i zwraca drzewo zawierające wszystkie elementy listy (polecam użyć funkcji wyższego rzędu)

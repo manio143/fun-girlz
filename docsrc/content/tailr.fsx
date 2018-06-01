@@ -69,7 +69,7 @@ Użyjemy zdobytej przez nas dotychczas wiedzy, aby napisać funkcje, które uła
 
 #### `map`
 
-Przypomnijmy sobie funkcje `plus1` i `succL`. Miały one wspólną funkcjonalność. Brały listę, robiły coś dla każdego jej elementu, niezależnie od pozostałych elementów, i zwracały zmodyfikowaną listę. Jest funkcjonalność bibliotecznej funkcji `map`, którą właśnie zaimplementujemy.
+Przypomnijmy sobie funkcje `plus1` i `succL`. Miały one wspólną funkcjonalność. Brały listę, robiły coś dla każdego jej elementu, niezależnie od pozostałych elementów, i zwracały zmodyfikowaną listę. Jest to funkcjonalność bibliotecznej funkcji `map`, którą właśnie zaimplementujemy.
 
 `map` ma sygnaturę `('a -> 'b) -> 'a list -> 'b list`
 
@@ -121,6 +121,8 @@ Powyżej wykorzystujemy częściową aplikację, żeby nie musieć podawać osta
 #### `fold`
 Kolejną przydatną funkcją jest `fold` który służy do zwijania listy (robienie z niej kuli do bałwanka) łącząc kolejne elementy pewną funkcją.
 
+`fold` ma sygnaturę `('a -> 'b -> 'a) -> 'a -> 'b list -> 'a`
+
 Przy jej pomocy zaimplementujemy w prosty sposób funkcję sumującą elementy listy.
 
 *)
@@ -145,12 +147,12 @@ let mapf f l = List.rev (fold (fun acc e -> f e :: acc) [] l)
 (**
 
 Zadania
-=========
+--------
 
 1. Zaimplementuj funkcję `filter` o sygnaturze `('a -> bool) -> 'a list -> 'a list`
 2. Używając powyższej oraz ogonowej implementacji funkcji `len` napisz prostą funkcję `count` (można zaimplementować `len` przez `fold`)
-3. Napisz prawostronny `foldr`, który pozwoli napisać `mapfr` bez potrzeby `List.rev`
-4. Napisz ogoną implementację silni oraz wersję korzystającą tylko z funkcji wyższego rzędu
+3. Napisz prawostronny `foldr`, który pozwoli napisać `mapfr` bez potrzeby `List.rev` (`foldr` nie będzie ogonowy)
+4. Napisz ogoną implementację silni (z akumulatorem) oraz wersję korzystającą tylko z funkcji wyższego rzędu
 
 Pytania? Jeśli wszystko jasne, to przechodzimy do [następnego modułu](./funops.html)
 

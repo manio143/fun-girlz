@@ -15,7 +15,7 @@ let k = (1,2,'a') // int * int * char
 
 (**
 
-Krotek używamy jeśli potrzebujemy posługużyć się anonimową strukturą danych o stałej wielkości, gdzie kolejność elementów nadaje im znaczenie. Więc jeśli np. mamy funkcję, która ma nam zwrócić dwa pierwsze elementy listy, to zwróci ona parę. Mamy wtedy pewność, że dostaniemy dwa elementy, ni mniej, ni więcej.
+Krotek używamy jeśli potrzebujemy posłużyć się anonimową strukturą danych o stałej wielkości, gdzie kolejność elementów nadaje im znaczenie. Więc jeśli np. mamy funkcję, która ma nam zwrócić dwa pierwsze elementy listy, to zwróci ona parę. Mamy wtedy pewność, że dostaniemy dwa elementy, ni mniej, ni więcej.
 
 *)
 
@@ -62,7 +62,7 @@ let rec plus1 l =
 (**
 
 Zadania
-============
+--------
 
 1. Napisz funkcję `len` obliczającą rekurencyjnie długość listy.
 2. Napisz funkcję `succL` która przyjmuje listę znaków i zwraca listę gdzie do każdego elementu zaaplikowano funkcję `succ` z poprzedniego modułu.

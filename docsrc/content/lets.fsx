@@ -156,7 +156,7 @@ Przy okazji poruszymy kwestię białych znaków i wcięć. W F# jeśli przerzuca
 (**
 
 Zadania
-=============
+---------
 
 1. Napisz funkcję `succ`, która dla znaku od 'a' do 'y' poda znak następny, a dla 'z' poda 'a'.
 2. Użyj wyrażenia warunkowego do deklaracji stałej liczbowej.

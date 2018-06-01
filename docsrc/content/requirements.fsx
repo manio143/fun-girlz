@@ -10,7 +10,7 @@ Potrzebne oprogramowanie
 Będziemy głównie pracować w Visual Studio Code pisząc pliki `.fsx`, czyli skrypty w języku F#.
 Na ten moment interpreter F# nie działa na platformie .NET Core, w związku z czym będziemy pracować na platformie .NET Framework v4.5 (lub kompatybilnej).
 
-Można korzystać ze swojego ulubionego edytora kodu, ale polecam VS Code z dodatkiem Ionide, który usprawnia pisanie kodu w F#.
+Można korzystać ze swojego ulubionego edytora kodu, ale polecam <u>VS Code z dodatkiem Ionide</u>, który usprawnia pisanie kodu w F#.
 
 Windows
 ---------
@@ -50,4 +50,6 @@ Inne
 
 Odwiedź stronę [organizacji F#](https://fsharp.org/) i zapoznaj się z odpowiednią zakładką ze strony 'Use'.
 
+
+Wszystko co trzeba zainstalowane? Jeśli tak to przechodzimy do [pierwszego modułu](./lets.html)
 *)

@@ -13,15 +13,14 @@ let referenceBinaries = []
 // Web site location for the generated documentation
 let website = "/fun-girlz"
 
-let githubLink = "https://github.com/Update GitHome in build.fsx/fun-girlz"
+let githubLink = "https://github.com/manio143/fun-girlz"
 
 // Specify more information about your project
 let info =
   [ "project-name", "fun-girlz"
     "project-author", "Marian Dziubiak"
-    "project-summary", "Project has no summmary; update build.fsx"
-    "project-github", githubLink
-    "project-nuget", "http://nuget.org/packages/fun-girlz" ]
+    "project-summary", "Wprowadzenie do programowania funkcyjnego GirlzCamp 2018"
+    "project-github", githubLink ]
 
 // --------------------------------------------------------------------------------------
 // For typical project, no changes are needed below

@@ -5,7 +5,7 @@
     <title>Operacja na funkcjach
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Project has no summmary; update build.fsx"/>
+    <meta name="description" content="Wprowadzenie do programowania funkcyjnego GirlzCamp 2018"/>
     <meta name="author" content="Marian Dziubiak"/>
 
     <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
@@ -25,7 +25,7 @@
       <div class="masthead">
         <ul class="nav nav-pills pull-right">
           <li><a href="http://fsharp.org">fsharp.org</a></li>
-          <li><a href="https://github.com/Update GitHome in build.fsx/fun-girlz">github page</a></li>
+          <li><a href="https://github.com/manio143/fun-girlz">github page</a></li>
         </ul>
         <h3 class="muted"><a href="/fun-girlz/index.html">fun-girlz</a></h3>
       </div>
@@ -40,10 +40,10 @@
 <span class="l">3: </span>
 <span class="l">4: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">&lt;&lt;</span>) <span class="i">f</span> <span class="i">g</span> <span class="o">=</span> <span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="i">f</span> (<span class="i">g</span> <span class="i">x</span>)
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">&lt;&lt;</span>) <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="f">f</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="f">g</span> <span class="o">=</span> <span class="k">fun</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">x</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="f">f</span> (<span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="f">g</span> <span onmouseout="hideTip(event, 'fs3', 6)" onmouseover="showTip(event, 'fs3', 6)" class="i">x</span>)
 
-<span class="k">let</span> <span class="i">add2mul5</span> <span class="o">=</span> <span class="o">(*)</span> <span class="n">5</span> <span class="o">&lt;&lt;</span> (<span class="o">+</span>) <span class="n">2</span>
-<span class="k">let</span> <span class="i">add2mul5&#39;</span> <span class="i">x</span> <span class="o">=</span> (<span class="i">x</span> <span class="o">+</span> <span class="n">2</span>) <span class="o">*</span> <span class="n">5</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 7)" onmouseover="showTip(event, 'fs4', 7)" class="f">add2mul5</span> <span class="o">=</span> <span class="o">(*)</span> <span class="n">5</span> <span class="o">&lt;&lt;</span> (<span class="o">+</span>) <span class="n">2</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 8)" onmouseover="showTip(event, 'fs5', 8)" class="f">add2mul5&#39;</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="i">x</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'fs6', 10)" onmouseover="showTip(event, 'fs6', 10)" class="i">x</span> <span class="o">+</span> <span class="n">2</span>) <span class="o">*</span> <span class="n">5</span>
 </code></pre></td>
 </tr>
 </table>
@@ -53,9 +53,9 @@
 <span class="l">2: </span>
 <span class="l">3: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">|&gt;</span>) <span class="i">x</span> <span class="i">g</span> <span class="o">=</span> <span class="i">g</span> <span class="i">x</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> (<span class="o">|&gt;</span>) <span onmouseout="hideTip(event, 'fs7', 11)" onmouseover="showTip(event, 'fs7', 11)" class="i">x</span> <span onmouseout="hideTip(event, 'fs8', 12)" onmouseover="showTip(event, 'fs8', 12)" class="f">g</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs8', 13)" onmouseover="showTip(event, 'fs8', 13)" class="f">g</span> <span onmouseout="hideTip(event, 'fs7', 14)" onmouseover="showTip(event, 'fs7', 14)" class="i">x</span>
 
-<span class="k">let</span> <span class="i">add2mul5&#39;&#39;</span> <span class="i">x</span> <span class="o">=</span> <span class="i">x</span> <span class="o">+</span> <span class="n">2</span> <span class="o">|&gt;</span> <span class="o">(*)</span> <span class="n">5</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 15)" onmouseover="showTip(event, 'fs9', 15)" class="f">add2mul5&#39;&#39;</span> <span onmouseout="hideTip(event, 'fs6', 16)" onmouseover="showTip(event, 'fs6', 16)" class="i">x</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs6', 17)" onmouseover="showTip(event, 'fs6', 17)" class="i">x</span> <span class="o">+</span> <span class="n">2</span> <span class="o">|&gt;</span> <span class="o">(*)</span> <span class="n">5</span>
 </code></pre></td>
 </tr>
 </table>
@@ -70,35 +70,33 @@
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span class="i">uncurry</span> <span class="i">f</span> <span class="o">=</span> <span class="k">fun</span> <span class="i">x</span> <span class="k">-&gt;</span> <span class="k">fun</span> <span class="i">y</span> <span class="k">-&gt;</span> <span class="i">f</span> (<span class="i">x</span>,<span class="i">y</span>)
-<span class="k">let</span> <span class="i">curry</span> <span class="i">f</span> <span class="o">=</span> <span class="k">fun</span> (<span class="i">x</span>,<span class="i">y</span>) <span class="k">-&gt;</span> <span class="i">f</span> <span class="i">x</span> <span class="i">y</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs10', 18)" onmouseover="showTip(event, 'fs10', 18)" class="f">uncurry</span> <span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="f">f</span> <span class="o">=</span> <span class="k">fun</span> <span onmouseout="hideTip(event, 'fs7', 20)" onmouseover="showTip(event, 'fs7', 20)" class="i">x</span> <span class="k">-&gt;</span> <span class="k">fun</span> <span onmouseout="hideTip(event, 'fs12', 21)" onmouseover="showTip(event, 'fs12', 21)" class="i">y</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs11', 22)" onmouseover="showTip(event, 'fs11', 22)" class="f">f</span> (<span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="i">x</span>,<span onmouseout="hideTip(event, 'fs12', 24)" onmouseover="showTip(event, 'fs12', 24)" class="i">y</span>)
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 25)" onmouseover="showTip(event, 'fs13', 25)" class="f">curry</span> <span onmouseout="hideTip(event, 'fs14', 26)" onmouseover="showTip(event, 'fs14', 26)" class="f">f</span> <span class="o">=</span> <span class="k">fun</span> (<span onmouseout="hideTip(event, 'fs7', 27)" onmouseover="showTip(event, 'fs7', 27)" class="i">x</span>,<span onmouseout="hideTip(event, 'fs12', 28)" onmouseover="showTip(event, 'fs12', 28)" class="i">y</span>) <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs14', 29)" onmouseover="showTip(event, 'fs14', 29)" class="f">f</span> <span onmouseout="hideTip(event, 'fs7', 30)" onmouseover="showTip(event, 'fs7', 30)" class="i">x</span> <span onmouseout="hideTip(event, 'fs12', 31)" onmouseover="showTip(event, 'fs12', 31)" class="i">y</span>
 </code></pre></td>
 </tr>
 </table>
 <p>Nie mam dobrego pomysłu na zadanie, które nie będzie trywialne, więc przejdźmy do <a href="./algeb.html">następnego modułu</a></p>
 
+<div class="tip" id="fs1">val f : (&#39;a -&gt; &#39;b)</div>
+<div class="tip" id="fs2">val g : (&#39;c -&gt; &#39;a)</div>
+<div class="tip" id="fs3">val x : &#39;c</div>
+<div class="tip" id="fs4">val add2mul5 : (int -&gt; int)<br /><br />Full name: Funops.add2mul5</div>
+<div class="tip" id="fs5">val add2mul5&#39; : x:int -&gt; int<br /><br />Full name: Funops.add2mul5&#39;</div>
+<div class="tip" id="fs6">val x : int</div>
+<div class="tip" id="fs7">val x : &#39;a</div>
+<div class="tip" id="fs8">val g : (&#39;a -&gt; &#39;b)</div>
+<div class="tip" id="fs9">val add2mul5&#39;&#39; : x:int -&gt; int<br /><br />Full name: Funops.add2mul5&#39;&#39;</div>
+<div class="tip" id="fs10">val uncurry : f:(&#39;a * &#39;b -&gt; &#39;c) -&gt; x:&#39;a -&gt; y:&#39;b -&gt; &#39;c<br /><br />Full name: Funops.uncurry</div>
+<div class="tip" id="fs11">val f : (&#39;a * &#39;b -&gt; &#39;c)</div>
+<div class="tip" id="fs12">val y : &#39;b</div>
+<div class="tip" id="fs13">val curry : f:(&#39;a -&gt; &#39;b -&gt; &#39;c) -&gt; x:&#39;a * y:&#39;b -&gt; &#39;c<br /><br />Full name: Funops.curry</div>
+<div class="tip" id="fs14">val f : (&#39;a -&gt; &#39;b -&gt; &#39;c)</div>
 
         </div>
         <div class="span3">
           <img src="/fun-girlz/img/logo.png" alt="F# Project" style="width:150px;margin:10px" />  
-          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
-            <li class="nav-header">fun-girlz</li>
-            <li><a href="/fun-girlz/index.html">Home page</a></li>
-            <li class="divider"></li>
-            <li><a href="http://nuget.org/packages/fun-girlz">Get Library via NuGet</a></li>
-            <li><a href="https://github.com/Update GitHome in build.fsx/fun-girlz">Source Code on GitHub</a></li>
-            <li><a href="/fun-girlz/license.html">License</a></li>
-            <li><a href="/fun-girlz/release-notes.html">Release Notes</a></li>
-            
-            <li class="nav-header">Getting started</li>
-            <li><a href="/fun-girlz/tutorial.html">Sample tutorial</a></li>
-
-            <li class="nav-header">Documentation</li>
-            <li><a href="/fun-girlz/reference/index.html">API Reference</a></li>
-          </ul>
         </div>
       </div>
     </div>
-    <a href="https://github.com/Update GitHome in build.fsx/fun-girlz"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"/></a>
   </body>
   </html>

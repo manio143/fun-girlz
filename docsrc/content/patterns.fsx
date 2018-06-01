@@ -7,7 +7,7 @@
 Jak ty wyglądasz? - Wzorce
 ======================
 
-Dotychczas używaliśmy wyrażeń warunkowych `if-then-else` żeby rozgałęziać ścieżki w naszym programi w zależności od napotkanych danych. Jednak nie jest to szczególnie wygodne kiedy mamy doczynienia z bardziej złożonymi przypadkami.
+Dotychczas używaliśmy wyrażeń warunkowych `if-then-else` żeby rozgałęziać ścieżki w naszym programie w zależności od napotkanych danych. Jednak nie jest to szczególnie wygodne kiedy mamy do czynienia z bardziej złożonymi przypadkami.
 
 Po pierwsze możemy jednym wyrażeniem testować kilka wartości:
 
@@ -26,7 +26,7 @@ let charOfInt i =
     
 (**
 
-Po drugie możemy we wzorcach umieszczać również zmienne:
+Po drugie możemy we wzorcach umieszczać również identyfikatory:
 
 *)
 
@@ -66,7 +66,7 @@ O dalszych wzorcach będziemy jeszcze mówić po wprowadzeniu kolejnych typów d
 (**
 
 Zadania
-========
+---------
 
 1. Znajdź i-ty element w liście
 2. Znajdź rozmiar listy
