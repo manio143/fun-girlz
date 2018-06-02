@@ -48,7 +48,7 @@
 <li><code>stateReturn : 'a -&gt; State&lt;'t, 'a&gt;</code>, która nie zmieniając stanu zwraca podaną wartość</li>
 <li><code>stateRun    : State&lt;'t, 'a&gt; -&gt; 't -&gt; 'a * 't</code>, która przyjmuje monadę stanu i pewien stan początkowy i zwraca parę (wynik, nowy stan)</li>
 <li><code>stateBind   : State&lt;'t, 'a&gt; -&gt; ('a -&gt; State&lt;'t, 'b&gt;) -&gt; State&lt;'t, 'b&gt;</code></li>
-<li><code>stateGet    : State&lt;'t, 't&gt;</code> to jest w zasadzie wartość monadyczna, która w wyniu ma aktualny stan</li>
+<li><code>stateGet    : unit -&gt; State&lt;'t, 't&gt;</code> to jest w zasadzie wartość monadyczna, która w wyniu ma aktualny stan</li>
 <li><code>statePut    : 't -&gt; State&lt;'t, unit&gt;</code>, która ustawia stan na podany</li>
 <li><code>stateModify : ('t -&gt; 't) -&gt; State&lt;'t, unit&gt;</code>, która modyfikuje stan podaną funkcją</li>
 </ul>
@@ -78,28 +78,28 @@
 <span class="l">23: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">//napisany przez was wcześniej Random</span>
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs31', 75)" onmouseover="showTip(event, 'fs31', 75)" class="t">RandomState</span><span class="o">&lt;</span><span class="o">&#39;</span><span class="i">a</span><span class="o">&gt;</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 76)" onmouseover="showTip(event, 'fs1', 76)" class="t">State</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 77)" onmouseover="showTip(event, 'fs2', 77)" class="t">Random</span>, <span class="o">&#39;</span><span class="i">a</span><span class="o">&gt;</span>
+<span class="k">type</span> <span onmouseout="hideTip(event, 'fs33', 76)" onmouseover="showTip(event, 'fs33', 76)" class="t">RandomState</span><span class="o">&lt;</span><span class="o">&#39;</span><span class="i">a</span><span class="o">&gt;</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 77)" onmouseover="showTip(event, 'fs1', 77)" class="t">State</span><span class="o">&lt;</span><span onmouseout="hideTip(event, 'fs2', 78)" onmouseover="showTip(event, 'fs2', 78)" class="t">Random</span>, <span class="o">&#39;</span><span class="i">a</span><span class="o">&gt;</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs32', 78)" onmouseover="showTip(event, 'fs32', 78)" class="i">nextRandomM</span> <span class="o">=</span> 
-    <span onmouseout="hideTip(event, 'fs30', 79)" onmouseover="showTip(event, 'fs30', 79)" class="i">state</span> {
-        <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs33', 80)" onmouseover="showTip(event, 'fs33', 80)" class="i">r</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs20', 81)" onmouseover="showTip(event, 'fs20', 81)" class="i">stateGet</span>
-        <span class="k">let</span> (<span onmouseout="hideTip(event, 'fs34', 82)" onmouseover="showTip(event, 'fs34', 82)" class="i">x</span>, <span onmouseout="hideTip(event, 'fs35', 83)" onmouseover="showTip(event, 'fs35', 83)" class="i">r&#39;</span>) <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 84)" onmouseover="showTip(event, 'fs4', 84)" class="f">nextRandom</span> <span onmouseout="hideTip(event, 'fs33', 85)" onmouseover="showTip(event, 'fs33', 85)" class="i">r</span>
-        <span class="k">do!</span> <span onmouseout="hideTip(event, 'fs22', 86)" onmouseover="showTip(event, 'fs22', 86)" class="f">statePut</span> <span onmouseout="hideTip(event, 'fs35', 87)" onmouseover="showTip(event, 'fs35', 87)" class="i">r&#39;</span>
-        <span class="k">return</span> <span class="i">x</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs34', 79)" onmouseover="showTip(event, 'fs34', 79)" class="i">nextRandomM</span> <span class="o">=</span> 
+    <span onmouseout="hideTip(event, 'fs32', 80)" onmouseover="showTip(event, 'fs32', 80)" class="i">state</span> {
+        <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs35', 81)" onmouseover="showTip(event, 'fs35', 81)" class="i">r</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs21', 82)" onmouseover="showTip(event, 'fs21', 82)" class="f">stateGet</span>()
+        <span class="k">let</span> (<span onmouseout="hideTip(event, 'fs36', 83)" onmouseover="showTip(event, 'fs36', 83)" class="i">x</span>, <span onmouseout="hideTip(event, 'fs37', 84)" onmouseover="showTip(event, 'fs37', 84)" class="i">r&#39;</span>) <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 85)" onmouseover="showTip(event, 'fs4', 85)" class="f">nextRandom</span> <span onmouseout="hideTip(event, 'fs35', 86)" onmouseover="showTip(event, 'fs35', 86)" class="i">r</span>
+        <span class="k">do!</span> <span onmouseout="hideTip(event, 'fs23', 87)" onmouseover="showTip(event, 'fs23', 87)" class="f">statePut</span> <span onmouseout="hideTip(event, 'fs37', 88)" onmouseover="showTip(event, 'fs37', 88)" class="i">r&#39;</span>
+        <span class="k">return</span> <span onmouseout="hideTip(event, 'fs36', 89)" onmouseover="showTip(event, 'fs36', 89)" class="i">x</span>
     }
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs36', 88)" onmouseover="showTip(event, 'fs36', 88)" class="f">randomArrayM</span> <span onmouseout="hideTip(event, 'fs37', 89)" onmouseover="showTip(event, 'fs37', 89)" class="i">n</span> <span class="o">=</span> 
-    <span onmouseout="hideTip(event, 'fs30', 90)" onmouseover="showTip(event, 'fs30', 90)" class="i">state</span> {
-        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs37', 91)" onmouseover="showTip(event, 'fs37', 91)" class="i">n</span> <span class="o">&lt;=</span> <span class="n">0</span> <span class="k">then</span> <span class="k">return</span> []
+<span class="k">let</span> <span class="k">rec</span> <span onmouseout="hideTip(event, 'fs38', 90)" onmouseover="showTip(event, 'fs38', 90)" class="f">randomArrayM</span> <span onmouseout="hideTip(event, 'fs39', 91)" onmouseover="showTip(event, 'fs39', 91)" class="i">n</span> <span class="o">=</span> 
+    <span onmouseout="hideTip(event, 'fs32', 92)" onmouseover="showTip(event, 'fs32', 92)" class="i">state</span> {
+        <span class="k">if</span> <span onmouseout="hideTip(event, 'fs39', 93)" onmouseover="showTip(event, 'fs39', 93)" class="i">n</span> <span class="o">&lt;=</span> <span class="n">0</span> <span class="k">then</span> <span class="k">return</span> []
         <span class="k">else</span>
-            <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs38', 92)" onmouseover="showTip(event, 'fs38', 92)" class="i">t</span> <span class="o">=</span> <span class="i">randomArrayM</span> (<span onmouseout="hideTip(event, 'fs37', 93)" onmouseover="showTip(event, 'fs37', 93)" class="i">n</span><span class="o">-</span><span class="n">1</span>)
-            <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs39', 94)" onmouseover="showTip(event, 'fs39', 94)" class="i">r</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs32', 95)" onmouseover="showTip(event, 'fs32', 95)" class="i">nextRandomM</span>
-            <span class="k">return</span> (<span onmouseout="hideTip(event, 'fs39', 96)" onmouseover="showTip(event, 'fs39', 96)" class="i">r</span><span class="o">::</span><span onmouseout="hideTip(event, 'fs38', 97)" onmouseover="showTip(event, 'fs38', 97)" class="i">t</span>)
+            <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs40', 94)" onmouseover="showTip(event, 'fs40', 94)" class="i">t</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs38', 95)" onmouseover="showTip(event, 'fs38', 95)" class="f">randomArrayM</span> (<span onmouseout="hideTip(event, 'fs39', 96)" onmouseover="showTip(event, 'fs39', 96)" class="i">n</span><span class="o">-</span><span class="n">1</span>)
+            <span class="k">let!</span> <span onmouseout="hideTip(event, 'fs41', 97)" onmouseover="showTip(event, 'fs41', 97)" class="i">r</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs34', 98)" onmouseover="showTip(event, 'fs34', 98)" class="i">nextRandomM</span>
+            <span class="k">return</span> (<span onmouseout="hideTip(event, 'fs41', 99)" onmouseover="showTip(event, 'fs41', 99)" class="i">r</span><span class="o">::</span><span onmouseout="hideTip(event, 'fs40', 100)" onmouseover="showTip(event, 'fs40', 100)" class="i">t</span>)
     }
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs40', 98)" onmouseover="showTip(event, 'fs40', 98)" class="f">runRandom</span> <span onmouseout="hideTip(event, 'fs41', 99)" onmouseover="showTip(event, 'fs41', 99)" class="i">seed</span> <span class="o">=</span>
-    <span class="k">let</span> (<span onmouseout="hideTip(event, 'fs42', 100)" onmouseover="showTip(event, 'fs42', 100)" class="i">x</span>, _) <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 101)" onmouseover="showTip(event, 'fs13', 101)" class="f">stateRun</span> (<span onmouseout="hideTip(event, 'fs36', 102)" onmouseover="showTip(event, 'fs36', 102)" class="f">randomArrayM</span> <span class="n">10</span>) <span onmouseout="hideTip(event, 'fs41', 103)" onmouseover="showTip(event, 'fs41', 103)" class="i">seed</span>
-    <span class="k">in</span> <span onmouseout="hideTip(event, 'fs42', 104)" onmouseover="showTip(event, 'fs42', 104)" class="i">x</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs42', 101)" onmouseover="showTip(event, 'fs42', 101)" class="f">runRandom</span> <span onmouseout="hideTip(event, 'fs43', 102)" onmouseover="showTip(event, 'fs43', 102)" class="i">seed</span> <span class="o">=</span>
+    <span class="k">let</span> (<span onmouseout="hideTip(event, 'fs44', 103)" onmouseover="showTip(event, 'fs44', 103)" class="i">x</span>, _) <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 104)" onmouseover="showTip(event, 'fs13', 104)" class="f">stateRun</span> (<span onmouseout="hideTip(event, 'fs38', 105)" onmouseover="showTip(event, 'fs38', 105)" class="f">randomArrayM</span> <span class="n">10</span>) <span onmouseout="hideTip(event, 'fs43', 106)" onmouseover="showTip(event, 'fs43', 106)" class="i">seed</span>
+    <span class="k">in</span> <span onmouseout="hideTip(event, 'fs44', 107)" onmouseover="showTip(event, 'fs44', 107)" class="i">x</span>
 </code></pre></td>
 </tr>
 </table>
@@ -112,41 +112,43 @@
 <div class="tip" id="fs5">val s : int</div>
 <div class="tip" id="fs6">val s&#39; : int</div>
 <div class="tip" id="fs7">namespace System</div>
-<div class="tip" id="fs8">type Int32 =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Equals : obj:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member GetTypeCode : unit -&gt; TypeCode<br />&#160;&#160;&#160;&#160;member ToString : unit -&gt; string + 3 overloads<br />&#160;&#160;&#160;&#160;member TryFormat : destination:Span&lt;char&gt; * charsWritten:int * ?format:ReadOnlySpan&lt;char&gt; * ?provider:IFormatProvider -&gt; bool<br />&#160;&#160;&#160;&#160;static val MaxValue : int<br />&#160;&#160;&#160;&#160;static val MinValue : int<br />&#160;&#160;&#160;&#160;static member Parse : s:string -&gt; int + 3 overloads<br />&#160;&#160;&#160;&#160;static member TryParse : s:string * result:int -&gt; bool + 1 overload<br />&#160;&#160;end<br /><br />Full name: System.Int32</div>
+<div class="tip" id="fs8">type Int32 =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Equals : obj:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member GetTypeCode : unit -&gt; TypeCode<br />&#160;&#160;&#160;&#160;member ToString : unit -&gt; string + 3 overloads<br />&#160;&#160;&#160;&#160;static val MaxValue : int<br />&#160;&#160;&#160;&#160;static val MinValue : int<br />&#160;&#160;&#160;&#160;static member Parse : s:string -&gt; int + 3 overloads<br />&#160;&#160;&#160;&#160;static member TryParse : s:string * result:int -&gt; bool + 1 overload<br />&#160;&#160;end<br /><br />Full name: System.Int32</div>
 <div class="tip" id="fs9">field int.MaxValue = 2147483647</div>
-<div class="tip" id="fs10">val stateReturn : x:&#39;a -&gt; State&lt;&#39;a,&#39;a&gt;<br /><br />Full name: State_monad.stateReturn</div>
+<div class="tip" id="fs10">val stateReturn : x:&#39;a -&gt; State&lt;&#39;b,&#39;a&gt;<br /><br />Full name: State_monad.stateReturn</div>
 <div class="tip" id="fs11">val x : &#39;a</div>
-<div class="tip" id="fs12">val s : &#39;a</div>
+<div class="tip" id="fs12">val s : &#39;b</div>
 <div class="tip" id="fs13">val stateRun : State&lt;&#39;a,&#39;b&gt; -&gt; s:&#39;a -&gt; &#39;b * &#39;a<br /><br />Full name: State_monad.stateRun</div>
 <div class="tip" id="fs14">val f : (&#39;a -&gt; &#39;b * &#39;a)</div>
-<div class="tip" id="fs15">val stateBind : m:State&lt;&#39;a,&#39;b&gt; -&gt; f:(&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;) -&gt; State&lt;&#39;a,&#39;c&gt;<br /><br />Full name: State_monad.stateBind</div>
-<div class="tip" id="fs16">val m : State&lt;&#39;a,&#39;b&gt;</div>
-<div class="tip" id="fs17">val f : (&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;)</div>
-<div class="tip" id="fs18">val x : &#39;b</div>
-<div class="tip" id="fs19">val s&#39; : &#39;a</div>
-<div class="tip" id="fs20">val stateGet : State&lt;unit,unit&gt;<br /><br />Full name: State_monad.stateGet</div>
-<div class="tip" id="fs21">val s : unit</div>
-<div class="tip" id="fs22">val statePut : s:&#39;a -&gt; State&lt;unit,&#39;a&gt;<br /><br />Full name: State_monad.statePut</div>
-<div class="tip" id="fs23">val stateModify : f:(unit -&gt; &#39;a) -&gt; State&lt;unit,&#39;a&gt;<br /><br />Full name: State_monad.stateModify</div>
-<div class="tip" id="fs24">val f : (unit -&gt; &#39;a)</div>
-<div class="tip" id="fs25">Multiple items<br />type StateBuilder =<br />&#160;&#160;new : unit -&gt; StateBuilder<br />&#160;&#160;member Bind : m:State&lt;&#39;a,&#39;b&gt; * f:(&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;) -&gt; State&lt;&#39;a,&#39;c&gt;<br />&#160;&#160;member Return : x:&#39;d -&gt; State&lt;&#39;d,&#39;d&gt;<br /><br />Full name: State_monad.StateBuilder<br /><br />--------------------<br />new : unit -&gt; StateBuilder</div>
-<div class="tip" id="fs26">val this : StateBuilder</div>
-<div class="tip" id="fs27">member StateBuilder.Return : x:&#39;d -&gt; State&lt;&#39;d,&#39;d&gt;<br /><br />Full name: State_monad.StateBuilder.Return</div>
-<div class="tip" id="fs28">val x : &#39;d</div>
-<div class="tip" id="fs29">member StateBuilder.Bind : m:State&lt;&#39;a,&#39;b&gt; * f:(&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;) -&gt; State&lt;&#39;a,&#39;c&gt;<br /><br />Full name: State_monad.StateBuilder.Bind</div>
-<div class="tip" id="fs30">val state : StateBuilder<br /><br />Full name: State_monad.state</div>
-<div class="tip" id="fs31">type RandomState&lt;&#39;a&gt; = State&lt;Random,&#39;a&gt;<br /><br />Full name: State_monad.RandomState&lt;_&gt;</div>
-<div class="tip" id="fs32">val nextRandomM : State&lt;unit,obj&gt;<br /><br />Full name: State_monad.nextRandomM</div>
-<div class="tip" id="fs33">val r : unit</div>
-<div class="tip" id="fs34">val x : int</div>
-<div class="tip" id="fs35">val r&#39; : Random</div>
-<div class="tip" id="fs36">val randomArrayM : n:int -&gt; State&lt;&#39;a list,&#39;a list&gt;<br /><br />Full name: State_monad.randomArrayM</div>
-<div class="tip" id="fs37">val n : int</div>
-<div class="tip" id="fs38">val t : &#39;a list</div>
-<div class="tip" id="fs39">val r : &#39;a</div>
-<div class="tip" id="fs40">val runRandom : seed:&#39;a list -&gt; &#39;a list<br /><br />Full name: State_monad.runRandom</div>
-<div class="tip" id="fs41">val seed : &#39;a list</div>
-<div class="tip" id="fs42">val x : &#39;a list</div>
+<div class="tip" id="fs15">val s : &#39;a</div>
+<div class="tip" id="fs16">val stateBind : m:State&lt;&#39;a,&#39;b&gt; -&gt; f:(&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;) -&gt; State&lt;&#39;a,&#39;c&gt;<br /><br />Full name: State_monad.stateBind</div>
+<div class="tip" id="fs17">val m : State&lt;&#39;a,&#39;b&gt;</div>
+<div class="tip" id="fs18">val f : (&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;)</div>
+<div class="tip" id="fs19">val x : &#39;b</div>
+<div class="tip" id="fs20">val s&#39; : &#39;a</div>
+<div class="tip" id="fs21">val stateGet : unit -&gt; State&lt;&#39;t,&#39;t&gt;<br /><br />Full name: State_monad.stateGet</div>
+<div class="tip" id="fs22">val s : &#39;t</div>
+<div class="tip" id="fs23">val statePut : s:&#39;t -&gt; State&lt;&#39;t,unit&gt;<br /><br />Full name: State_monad.statePut</div>
+<div class="tip" id="fs24">type unit = Unit<br /><br />Full name: Microsoft.FSharp.Core.unit</div>
+<div class="tip" id="fs25">val stateModify : f:(&#39;t -&gt; &#39;t) -&gt; State&lt;&#39;t,unit&gt;<br /><br />Full name: State_monad.stateModify</div>
+<div class="tip" id="fs26">val f : (&#39;t -&gt; &#39;t)</div>
+<div class="tip" id="fs27">Multiple items<br />type StateBuilder =<br />&#160;&#160;new : unit -&gt; StateBuilder<br />&#160;&#160;member Bind : m:State&lt;&#39;a,&#39;b&gt; * f:(&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;) -&gt; State&lt;&#39;a,&#39;c&gt;<br />&#160;&#160;member Return : x:&#39;d -&gt; State&lt;&#39;e,&#39;d&gt;<br /><br />Full name: State_monad.StateBuilder<br /><br />--------------------<br />new : unit -&gt; StateBuilder</div>
+<div class="tip" id="fs28">val this : StateBuilder</div>
+<div class="tip" id="fs29">member StateBuilder.Return : x:&#39;d -&gt; State&lt;&#39;e,&#39;d&gt;<br /><br />Full name: State_monad.StateBuilder.Return</div>
+<div class="tip" id="fs30">val x : &#39;d</div>
+<div class="tip" id="fs31">member StateBuilder.Bind : m:State&lt;&#39;a,&#39;b&gt; * f:(&#39;b -&gt; State&lt;&#39;a,&#39;c&gt;) -&gt; State&lt;&#39;a,&#39;c&gt;<br /><br />Full name: State_monad.StateBuilder.Bind</div>
+<div class="tip" id="fs32">val state : StateBuilder<br /><br />Full name: State_monad.state</div>
+<div class="tip" id="fs33">type RandomState&lt;&#39;a&gt; = State&lt;Random,&#39;a&gt;<br /><br />Full name: State_monad.RandomState&lt;_&gt;</div>
+<div class="tip" id="fs34">val nextRandomM : State&lt;Random,int&gt;<br /><br />Full name: State_monad.nextRandomM</div>
+<div class="tip" id="fs35">val r : Random</div>
+<div class="tip" id="fs36">val x : int</div>
+<div class="tip" id="fs37">val r&#39; : Random</div>
+<div class="tip" id="fs38">val randomArrayM : n:int -&gt; State&lt;Random,int list&gt;<br /><br />Full name: State_monad.randomArrayM</div>
+<div class="tip" id="fs39">val n : int</div>
+<div class="tip" id="fs40">val t : int list</div>
+<div class="tip" id="fs41">val r : int</div>
+<div class="tip" id="fs42">val runRandom : seed:Random -&gt; int list<br /><br />Full name: State_monad.runRandom</div>
+<div class="tip" id="fs43">val seed : Random</div>
+<div class="tip" id="fs44">val x : int list</div>
 
         </div>
         <div class="span3">
